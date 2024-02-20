@@ -16,7 +16,7 @@ test:
 
 
 migrations:
-	python manage.py makemigrations
+	python manage.py makemigrations mv4
 	
 migrate:
 	python manage.py migrate

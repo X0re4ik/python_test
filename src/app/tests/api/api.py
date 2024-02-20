@@ -45,7 +45,10 @@ class APIMixin:
     def _run_http_method(self, *args, expected_status: int, 
                          method: Literal["post", "get", "patch", "put", "delete"], **kwargs):
         _http_method = getattr(self.client, method)
-        response = _http_method(*args, follow=True, format='json', **kwargs)
+        
+        format=kwargs.pop('format', 'json')
+        
+        response = _http_method(*args, follow=True, format=format, **kwargs)
         assert response.status_code, expected_status
         return response.json() if method != "delete" else {}
 

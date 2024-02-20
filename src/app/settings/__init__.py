@@ -38,9 +38,11 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INTERNAL_APPS = [
+    'mv4'
 ]
 
 EXTERNAL_APPS = [
+    'rest_framework',
 ]
 
 DJANGO_CONTRIB_APPS = [
@@ -66,9 +68,25 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'djangorestframework_camel_case.middleware.CamelCaseMiddleWare',
 ]
 
+REST_FRAMEWORK = {
 
+    'DEFAULT_RENDERER_CLASSES': (
+        'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
+        'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
+        # Any other renders
+    ),
+
+    'DEFAULT_PARSER_CLASSES': (
+        # If you use MultiPartFormParser or FormParser, we also have a camel case version
+        'djangorestframework_camel_case.parser.CamelCaseFormParser',
+        'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
+        'djangorestframework_camel_case.parser.CamelCaseJSONParser',
+        # Any other parsers
+    ),
+}
 
 
 ROOT_URLCONF = 'app.urls'
@@ -155,11 +173,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-STATIC_ROOT = BASE_DIR / "static"
+STATIC_ROOT = BASE_DIR.parent / "static"
 STATIC_URL = '/static/'
 
 # Media files (Images)
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = BASE_DIR.parent / "media"
 MEDIA_URL = '/media/'
 
 # Default primary key field type
