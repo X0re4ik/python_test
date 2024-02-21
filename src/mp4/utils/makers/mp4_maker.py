@@ -1,24 +1,25 @@
 
 
-from mv4.models import MV4
+from mp4.models import MP4
+from mp4.tasks import change_video_resolution
 
-
-class MV4Maker:
+class MP4Maker:
     def __init__(self, file) -> None:
         self._file = file
         self._filename = file.name
     
     def create(self, *args, **kwargs):
-        return MV4.objects.create(
+        return MP4.objects.create(
             filename=self._filename,
             processing=True,
             file=self._file,  
         )
         
-class MV4Updater:
+class MP4Updater:
     
     def __init__(self, instance) -> None:
         self._instance = instance
     
     def update_size(self, width, height):
+        change_video_resolution.delay(self._instance.pk, width, height)
         return self._instance

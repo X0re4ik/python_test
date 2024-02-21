@@ -13,13 +13,13 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='MV4',
+            name='MP4',
             fields=[
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False, verbose_name='Id')),
                 ('filename', models.CharField(max_length=50, verbose_name='Filename')),
                 ('processing', models.BooleanField(verbose_name='Processing')),
                 ('processing_success', models.BooleanField(blank=True, default=None, null=True, verbose_name='Processing success')),
-                ('file', models.FileField(upload_to='mv4/', verbose_name='File')),
+                ('file', models.FileField(upload_to='mp4/', verbose_name='File')),
             ],
         ),
     ]

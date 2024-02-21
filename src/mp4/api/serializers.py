@@ -1,8 +1,8 @@
 
 
-from mv4.models import MV4
+from mp4.models import MP4
 from rest_framework import serializers
-from mv4.utils.makers import MV4Maker, MV4Updater
+from mp4.utils.makers import MP4Maker, MP4Updater
 
 
 class toRepresentationMixin:
@@ -11,36 +11,36 @@ class toRepresentationMixin:
             "success": True
         }
 
-class _MV4Serializer(serializers.ModelSerializer):
+class _MP4Serializer(serializers.ModelSerializer):
     class Meta:
-        model = MV4
+        model = MP4
         
     
 
-class MV4CreateSerializer(_MV4Serializer):
+class MP4CreateSerializer(_MP4Serializer):
     file = serializers.FileField(write_only=True) 
-    class Meta(_MV4Serializer.Meta):
+    class Meta(_MP4Serializer.Meta):
         fields = [
             'id',
             'file',    
         ]
     
     def create(self, validated_data):
-        return MV4Maker(**validated_data).create()
+        return MP4Maker(**validated_data).create()
 
-class MV4PartialUpdateSerializer(toRepresentationMixin, _MV4Serializer):
+class MP4PartialUpdateSerializer(toRepresentationMixin, _MP4Serializer):
     
     width = serializers.IntegerField(write_only=True)
     height = serializers.IntegerField(write_only=True)
     
-    class Meta(_MV4Serializer.Meta):
+    class Meta(_MP4Serializer.Meta):
         fields = [
             'width',
             'height', 
         ]
     
     def update(self, instance, validated_data):
-        return MV4Updater(instance).update_size(**validated_data)
+        return MP4Updater(instance).update_size(**validated_data)
     
     def validate_width(self, attr):
         return self._validate_hw(attr)
@@ -55,8 +55,8 @@ class MV4PartialUpdateSerializer(toRepresentationMixin, _MV4Serializer):
             )
         return attr
         
-class MV4GetSerializer(_MV4Serializer): 
-    class Meta(_MV4Serializer.Meta):
+class MP4GetSerializer(_MP4Serializer): 
+    class Meta(_MP4Serializer.Meta):
         fields = [
             'id',
             'filename',
@@ -64,6 +64,6 @@ class MV4GetSerializer(_MV4Serializer):
             'processing_success',
         ]
 
-class MV4DeleteSerializer(_MV4Serializer, toRepresentationMixin):
-    class Meta(_MV4Serializer.Meta):
+class MP4DeleteSerializer(_MP4Serializer, toRepresentationMixin):
+    class Meta(_MP4Serializer.Meta):
         fields = []

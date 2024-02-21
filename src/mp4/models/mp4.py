@@ -3,7 +3,7 @@ import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-class MV4(models.Model):
+class MP4(models.Model):
     id = models.UUIDField(
         _("Id"),
         primary_key=True, 
@@ -26,11 +26,11 @@ class MV4(models.Model):
     
     file = models.FileField(
         _("File"), 
-        upload_to='mv4/', 
+        upload_to='mp4/', 
     )
     
     
-    def change_file(self, path):
+    def change_link_on_file(self, path):
         self.file.storage.delete(self.file.name)
         self.file.name = path
         return self.save()
