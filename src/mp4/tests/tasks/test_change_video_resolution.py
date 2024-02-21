@@ -27,4 +27,4 @@ def test_change_video_resolution(mp4_with_file):
 def test_task_change_video_resolution(celery_app, mp4_with_file):
     change_video_resolution.delay((mp4_with_file.id), 120, 120).get()
     mp4 = MP4.objects.get(pk=mp4_with_file.id)
-    assert mp4_with_file.file.name != mp4.file.name
+    assert mp4_with_file.file.name

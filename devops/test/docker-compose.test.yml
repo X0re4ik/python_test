@@ -6,7 +6,7 @@ services:
     build:
       context: ./../../src
       dockerfile: Dockerfile
-    command: ./.entrypoints/wsgi.sh
+    command: ./.entrypoints/test.sh
     env_file:
       - ./.docker.test.env
     depends_on:
