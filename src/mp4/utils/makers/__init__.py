@@ -1,8 +1,8 @@
-from .mp4_maker import MP4Maker, MP4Updater
+from .mp4_maker import MP4Creator, MP4Updater
 
 
 
 __all__ = [
-    "MP4Maker",
+    "MP4Creator",
     "MP4Updater",
 ]

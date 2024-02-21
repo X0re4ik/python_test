@@ -2,7 +2,7 @@
 
 from mp4.models import MP4
 from rest_framework import serializers
-from mp4.utils.makers import MP4Maker, MP4Updater
+from mp4.utils.makers import MP4Creator, MP4Updater
 
 
 class toRepresentationMixin:
@@ -26,7 +26,7 @@ class MP4CreateSerializer(_MP4Serializer):
         ]
     
     def create(self, validated_data):
-        return MP4Maker(**validated_data).create()
+        return MP4Creator(**validated_data).create()
 
 class ResolutionField(serializers.Field):
     
