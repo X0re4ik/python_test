@@ -43,6 +43,7 @@ INTERNAL_APPS = [
 
 EXTERNAL_APPS = [
     'rest_framework',
+    'drf_spectacular',
 ]
 
 DJANGO_CONTRIB_APPS = [
@@ -87,6 +88,7 @@ REST_FRAMEWORK = {
         'djangorestframework_camel_case.parser.CamelCaseJSONParser',
         # Any other parsers
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema', 
 }
 
 
