@@ -23,6 +23,6 @@ def _change_video_resolution(mp4_pk: Any, width: int, height: int):
     mp4.save()
 
 
-@shared_task
-def change_video_resolution(mp4_pk: Any, width, height):
+@shared_task(bind=True)
+def change_video_resolution(self, mp4_pk: Any, width: int, height: int):
     return _change_video_resolution(mp4_pk, width, height)

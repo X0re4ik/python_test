@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import FileExtensionValidator
 
 class MP4(models.Model):
     id = models.UUIDField(
@@ -26,7 +27,10 @@ class MP4(models.Model):
     
     file = models.FileField(
         _("File"), 
-        upload_to='mp4/', 
+        upload_to='mp4/',
+        validators=[
+            FileExtensionValidator(allowed_extensions=['mp4'])
+        ],
     )
     
     

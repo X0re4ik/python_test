@@ -3,7 +3,7 @@ import pytest
 
 from mixer.backend.django import mixer, get_file
 from mp4.models import MP4
-from mp4.tasks.change_video_resolution import _change_video_resolution, change_video_resolution
+from mp4.tasks import _change_video_resolution, change_video_resolution
 
 
 pytestmark = [pytest.mark.django_db]
@@ -16,10 +16,6 @@ MOCK_MP4_FILE = os.path.abspath(os.path.join(
 def mp4_with_file(mixer):
     file = get_file(MOCK_MP4_FILE)
     return mixer.blend(MP4, file=file)
-
-@pytest.fixture
-def mocked_change_video_resolution(mocker):  
-    return mocker.patch("mp4.tasks.change_video_resolution.delay") 
 
 def test_change_video_resolution(mp4_with_file):
     _change_video_resolution(mp4_with_file.pk, 100, 100)

@@ -28,10 +28,31 @@ class MP4CreateSerializer(_MP4Serializer):
     def create(self, validated_data):
         return MP4Maker(**validated_data).create()
 
+class ResolutionField(serializers.Field):
+    
+    default_error_messages = {
+        'incorrect_type': 'Incorrect type. Expected a integer, but got {input_type}',
+        'out_of_range': 'Value out of range. Must be between 20 and +infinity.',
+        'odd_number': 'The number must be even'
+    }
+    
+    LOW_LIMIT_VALUE = 20
+    
+    def to_internal_value(self, data):
+        
+        if not isinstance(data, int):
+            self.fail('incorrect_type', input_type=type(data).__name__)
+        if data <= self.LOW_LIMIT_VALUE:
+            self.fail('out_of_range', input_type=type(data).__name__)
+        if data % 2 != 0:
+            self.fail('odd_number')
+        
+        return data
+
 class MP4PartialUpdateSerializer(toRepresentationMixin, _MP4Serializer):
     
-    width = serializers.IntegerField(write_only=True)
-    height = serializers.IntegerField(write_only=True)
+    width = ResolutionField(write_only=True)
+    height = ResolutionField(write_only=True)
     
     class Meta(_MP4Serializer.Meta):
         fields = [
@@ -41,19 +62,6 @@ class MP4PartialUpdateSerializer(toRepresentationMixin, _MP4Serializer):
     
     def update(self, instance, validated_data):
         return MP4Updater(instance).update_size(**validated_data)
-    
-    def validate_width(self, attr):
-        return self._validate_hw(attr)
-    
-    def validate_height(self, attr):
-        return self._validate_hw(attr)
-    
-    def _validate_hw(self, attr, high_limit=20):
-        if attr > high_limit:
-            raise serializers.ValidationError(
-                {"end_date": "End date must be after start date."}
-            )
-        return attr
         
 class MP4GetSerializer(_MP4Serializer): 
     class Meta(_MP4Serializer.Meta):
