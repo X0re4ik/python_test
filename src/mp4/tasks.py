@@ -8,6 +8,7 @@ def _change_video_resolution(mp4_pk: Any, width: int, height: int):
     mp4 = MP4.objects.get(pk=mp4_pk)
     mp4.processing = True
     mp4.save()
+    processing_success = False
     
     try:
         
@@ -16,10 +17,12 @@ def _change_video_resolution(mp4_pk: Any, width: int, height: int):
         cm.save()
         
     except:
-        mp4.processing_success = False
-    
+        processing_success = False
+    else: 
+        processing_success = True
+        
     mp4.processing = False
-    mp4.processing_success = True
+    mp4.processing_success = processing_success
     mp4.save()
 
 
