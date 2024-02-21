@@ -31,6 +31,8 @@ $ make services
 4. Проверяем, что все работает корректно
 ```sh
 $ cd src
+$ make freeze
+$ make migrate
 $ make test
 ```
 
